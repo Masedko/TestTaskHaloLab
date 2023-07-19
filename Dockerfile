@@ -6,12 +6,13 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 
-COPY TestTaskHaloLab TestTaskHaloLab
+COPY . TestTaskHaloLab/.
 
 WORKDIR TestTaskHaloLab
 RUN go build -ldflags "-w -s -linkmode external -extldflags -static" -a cmd/app/main.go
 
 FROM scratch
 EXPOSE 8080
-COPY --from=server_builder /TestTaskHaloLab/main .
+COPY --from=server_builder /app/TestTaskHaloLab/main .
+COPY --from=server_builder /app/TestTaskHaloLab/.env .
 CMD ["./main"]

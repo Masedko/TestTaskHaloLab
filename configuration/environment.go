@@ -2,7 +2,6 @@ package configuration
 
 import (
 	"github.com/spf13/viper"
-	"time"
 )
 
 type EnvConfigModel struct {
@@ -12,6 +11,9 @@ type EnvConfigModel struct {
 	DBName         string `mapstructure:"POSTGRES_DB"`
 	DBPort         string `mapstructure:"POSTGRES_PORT"`
 	SSLMode        string `mapstructure:"SSL_MODE"`
+	RedisHost      string `mapstructure:"REDIS_HOST"`
+	RedisPassword  string `mapstructure:"REDIS_PASSWORD"`
+	RedisDB        string `mapstructure:"REDIS_DB"`
 }
 
 var EnvConfig EnvConfigModel

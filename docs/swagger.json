@@ -1,0 +1,493 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/group/{groupName}/species": {
+            "get": {
+                "description": "Full list of species (with counts) currently detected inside the group",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "Get Species inside group",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Name of the group '{greekLetter}'",
+                        "name": "groupName",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Fish species with count",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dtos.Fish"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to return fish species",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.MessageResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Wrong groupName format",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.MessageResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/{groupName}/species/top/{N}": {
+            "get": {
+                "description": "List of top N species (with counts) currently detected inside the group",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "Get Top N Species inside group",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Name of the group '{greekLetter}'",
+                        "name": "groupName",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Top N",
+                        "name": "N",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start Date Time",
+                        "name": "fromDateTime",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End Date Time",
+                        "name": "untilDateTime",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Fish species with count",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dtos.Fish"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to return fish species",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.MessageResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Wrong groupName format",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.MessageResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/{groupName}/temperature/average": {
+            "get": {
+                "description": "Calculates the temperature average for the specified group.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "Calculate temperature average for a group",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Name of the group '{greekLetter}'",
+                        "name": "groupName",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Temperature",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.Temperature"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to return temperature average",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.MessageResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Wrong groupName format",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.MessageResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/group/{groupName}/transparency/average": {
+            "get": {
+                "description": "Calculates the transparency average for the specified group.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "Calculate transparency average for a group",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Name of the group '{greekLetter}'",
+                        "name": "groupName",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Transparency",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.Transparency"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to return transparency average",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.MessageResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Wrong groupName format",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.MessageResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/region/temperature/max": {
+            "get": {
+                "description": "Current maximum temperature inside the region (a volume represented by the range of coordinates)",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "region"
+                ],
+                "summary": "Get Maximum temperature inside region",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Minimum X coordinate",
+                        "name": "xMin",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Maximum X coordinate",
+                        "name": "xMax",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Minimum Y coordinate",
+                        "name": "yMin",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Maximum Y coordinate",
+                        "name": "yMax",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Minimum Z coordinate",
+                        "name": "zMin",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Maximum Z coordinate",
+                        "name": "zMax",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Maximum temperature in volume",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.Temperature"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to return maximum temperature",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.MessageResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Wrong coordinates",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.MessageResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/region/temperature/min": {
+            "get": {
+                "description": "Current minimum temperature inside the region (a volume represented by the range of coordinates)",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "region"
+                ],
+                "summary": "Get Minimum temperature inside region",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Minimum X coordinate",
+                        "name": "xMin",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Maximum X coordinate",
+                        "name": "xMax",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Minimum Y coordinate",
+                        "name": "yMin",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Maximum Y coordinate",
+                        "name": "yMax",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Minimum Z coordinate",
+                        "name": "zMin",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Maximum Z coordinate",
+                        "name": "zMax",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Minimum temperature in volume",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.Temperature"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to return minimum temperature",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.MessageResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Wrong coordinates",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.MessageResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/sensor/{codeName}/temperature/average": {
+            "get": {
+                "description": "Average temperature detected by a particular sensor between the specified date/time pairs (UNIX timestamps)",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sensor"
+                ],
+                "summary": "Get average temperature inside region for particular sensor",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Start Date Time",
+                        "name": "fromDateTime",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "End Date Time",
+                        "name": "untilDateTime",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Name of the group '{greekLetter} {int}'",
+                        "name": "codeName",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Average temperature",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.Temperature"
+                        }
+                    },
+                    "400": {
+                        "description": "Failed to return average temperature",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.MessageResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Wrong UNIX time",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.MessageResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.MessageResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dtos.Fish": {
+            "type": "object",
+            "required": [
+                "count",
+                "name"
+            ],
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtos.MessageResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "dtos.Temperature": {
+            "type": "object",
+            "required": [
+                "temperature"
+            ],
+            "properties": {
+                "temperature": {
+                    "type": "number"
+                }
+            }
+        },
+        "dtos.Transparency": {
+            "type": "object",
+            "required": [
+                "transparency"
+            ],
+            "properties": {
+                "transparency": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

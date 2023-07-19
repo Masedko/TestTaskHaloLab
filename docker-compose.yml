@@ -4,7 +4,7 @@ services:
 
   go:
     container_name: go
-    image: masedko/test-task-halo-lab:latest
+    image: gotesttaskhalolab:1.0
     restart: always
     ports:
       - "8080:8080"
@@ -13,23 +13,25 @@ services:
     depends_on:
       pg:
         condition: service_healthy
+      redis:
+        condition: service_healthy
     links:
       - pg
       - redis
 
   pg:
     container_name: pg
-    image: postgres:15
+    image: postgres:15-alpine3.18
     restart: always
     env_file:
       - .env
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}'"]
       interval: 10s
       timeout: 5s
       retries: 5
     volumes:
-      - ./data/pg:/var/lib/postgresql/data
+      - ./db/pg:/var/lib/postgresql/data
     depends_on:
       - redis
 
@@ -37,5 +39,23 @@ services:
     container_name: redis
     image: redis:7-alpine3.16
     restart: always
+    env_file:
+      - .env
+    command:
+      - /bin/sh
+      - -c
+      - redis-server --requirepass "$${REDIS_PASSWORD:?REDIS_PASSWORD variable is not set}"
+    healthcheck:
+      test: [ "CMD", "redis-cli","ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      - REDIS_DB=${REDIS_DB}
     volumes:
-      - ./data/redis:/data
+      - ./db/redis:/data
+
+
+volumes:
+  database_data:
+    driver: local
